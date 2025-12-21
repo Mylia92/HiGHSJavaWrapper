@@ -19,10 +19,12 @@ import java.util.Optional;
 
 public class Model {
 
+    private static final String OUTPUT_FLAG_OPTION = "output_flag";
+
     private final Highs highs = new Highs();
 
     public Model() {
-        this.highs.setOptionValue("output_flag", false);
+        this.highs.setOptionValue(OUTPUT_FLAG_OPTION, false);
     }
 
     public boolean addOption(@NonNull final Option option) throws OptionException {
