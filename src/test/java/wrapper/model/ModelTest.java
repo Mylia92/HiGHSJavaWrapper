@@ -25,7 +25,7 @@ class ModelTest {
     }
 
     @Test
-    void addOptionMustThrowForUnknownOption() {
+    void addOptionMustThrowForUnknownOptionType() {
         class UnknowOption implements Option {
             @Override
             public String getOptionName() {
