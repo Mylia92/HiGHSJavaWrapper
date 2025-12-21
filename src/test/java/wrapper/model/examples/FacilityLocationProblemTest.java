@@ -22,7 +22,7 @@ class FacilityLocationProblemTest {
     }
 
     @Test
-    void problem() throws LinearExpressionException {
+    void example() throws LinearExpressionException {
         // Instance.
         final Random random = new Random(0);
         final int nmbFacilities = 5;

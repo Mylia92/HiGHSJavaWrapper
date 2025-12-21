@@ -19,7 +19,7 @@ class KnapsackProblemTest {
     }
 
     @Test
-    void problem() throws LinearExpressionException {
+    void example() throws LinearExpressionException {
         // Instance.
         final int nmbItems = 5;
         final int capacity = 50;
