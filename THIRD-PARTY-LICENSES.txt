@@ -1,6 +1,0 @@
-This project uses the following third-party libraries:
-
-- HiGHS (MIT License),
-- ArchUnit (Apache 2.0 License),
-- JUnit5 (Eclipse Public License v2.0),
-- Lombok (MIT License).
