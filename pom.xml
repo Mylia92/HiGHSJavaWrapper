@@ -123,6 +123,7 @@
                     <outputDirectory>${basedir}</outputDirectory>
                     <thirdPartyFilename>THIRD-PARTY-LICENSES.txt</thirdPartyFilename>
                     <encoding>UTF-8</encoding>
+                    <failOnMissing>true</failOnMissing>
                 </configuration>
             </plugin>
         </plugins>
