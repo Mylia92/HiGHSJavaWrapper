@@ -6,6 +6,10 @@ capable of solving linear (LP), mixed-integer (MIP) and quadratic programming (Q
 The project relies on [SWIG](https://swig.org/) to generate the JNI classes to be able to communicate with the HiGHS
 shared library file, `libhighs.so`.
 
+Additional wrap functions can be added and help can be provided on demand.
+
+Some examples on how to use the wrapper are provided in `src/test/java/wrapper/model/examples`.
+
 ## Dependencies / Prerequisites
 
 ### HiGHS
@@ -26,7 +30,7 @@ A JDK 23 or later is required. `JAVA_HOME` must be defined.
 `gcc` must be installed. Other compilers could be used. In this case, `generate_jni_classes` should be updated
 accordingly.
 
-## Build JNI classes
+### Build JNI classes
 
 To build the JNI classes required by the wrapper, `generate_jni_classes` should be used:
 
@@ -34,7 +38,7 @@ To build the JNI classes required by the wrapper, `generate_jni_classes` should 
 - It automatically creates object files in `src/main/java/highs` and copies the shared libraries `libhighs.so` and
   `libhighswrap.so` in the base directory.
 
-## Run
+## Use
 
 To run the tests or use the wrapper for another project, the JVM argument `-Djava.library.path` must be filled. The
 referred path must contain `libhighs.so` and `libhighswrap.so`. The main class or test classes (relying on calls to
@@ -50,13 +54,9 @@ referred path must contain `libhighs.so` and `libhighswrap.so`. The main class o
 If the shared libraries `libhighs.so` and `libhighswrap.so` cannot be found at run time, then exceptions of type
 `UnsatisfiedLinkError` will be thrown. Note that `libhighs.so` must be loaded before `libhighswrap.so`.
 
-## Examples
-
-Some examples on how to use the wrapper are provided in `src/test/java/wrapper/model/examples`.
-
 ## Test system
 
-- Windows 11, WSL2 6.6.87.2-microsoft-standard-WSL2 on Ubuntu 25.10,
+- Ubuntu 25.10,
 - GCC 15.1.2,
 - SWIG 4.3.0,
 - Java 23.0.2.
