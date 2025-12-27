@@ -28,7 +28,7 @@ accordingly.
 
 ## Build JNI classes
 
-To build the JNI classes required by the wrapper, running `generate_jni_classes` should be used:
+To build the JNI classes required by the wrapper, `generate_jni_classes` should be used:
 
 - It builds the JNI classes in `src/main/java/highs`,
 - It automatically creates object files in `src/main/java/highs` and copies the shared libraries `libhighs.so` and
