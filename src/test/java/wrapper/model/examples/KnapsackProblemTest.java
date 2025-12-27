@@ -25,8 +25,6 @@ class KnapsackProblemTest {
         final int capacity = 50;
         final double[] values = {1, 2, 3.5, 4.6, 7.2};
         final double[] weights = {0.5, 1, 4.5, 1.0, 4.3};
-        assertEquals(nmbItems, weights.length);
-        assertEquals(nmbItems, values.length);
 
         // Model creation.
         final Model model = new Model();
