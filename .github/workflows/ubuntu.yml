@@ -11,11 +11,10 @@ jobs:
 
     steps:
       - name: Install GCC
-        run: sudo apt-get update && sudo apt-get install -y gcc g++
-
-      - name: Set C and CXX environment variables
         run: |
-          echo "C=gcc" >> $GITHUB_ENV
+          sudo apt-get update
+          sudo apt-get install -y gcc g++
+          echo "CC=gcc" >> $GITHUB_ENV
           echo "CXX=g++" >> $GITHUB_ENV
 
       - name: Install CMake
@@ -59,9 +58,6 @@ jobs:
         run: |
           chmod +x ./generate_jni_classes
           ./generate_jni_classes
-        env:
-          HIGHS_HOME: ${{ env.HIGHS_HOME }}
-          JAVA_HOME: ${{ env.JAVA_HOME }}
 
       - name: Cache Maven packages
         uses: actions/cache@v3
