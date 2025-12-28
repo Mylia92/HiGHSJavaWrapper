@@ -11,13 +11,15 @@ jobs:
 
     steps:
       - name: Install GCC
-        run: sudo apt-get update && sudo apt-get install -y gcc g++
+        run: sudo apt-get update && sudo apt-get install -y gcc=13.2
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13.2 132
+          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13.2 132
 
       - name: Install CMake
-        run: sudo apt-get update && sudo apt-get install -y cmake
+        run: sudo apt-get update && sudo apt-get install -y cmake=3.31.6
 
       - name: Install SWIG
-        run: sudo apt-get update && sudo apt-get install -y swig
+        run: sudo apt-get update && sudo apt-get install -y swig=4.3.0
 
       - name: Checkout HiGHS
         uses: actions/checkout@v4
