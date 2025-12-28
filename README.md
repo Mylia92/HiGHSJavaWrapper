@@ -30,7 +30,7 @@ A JDK 23 or later is required. `JAVA_HOME` must be defined.
 `gcc` must be installed. Other compilers could be used. In this case, `generate_jni_classes` should be updated
 accordingly.
 
-### Build JNI classes
+### Build the JNI classes and shared libraries
 
 To build the JNI classes required by the wrapper, `generate_jni_classes` should be used:
 
