@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install gcc
+      - name: Install GCC
         run: sudo apt-get update && sudo apt-get install -y gcc g++
 
       - name: Install CMake
@@ -31,6 +31,15 @@ jobs:
           cd HiGHS
           cmake -S . -B build
           cmake --build build
+          ctest
+
+      - name: Set HIGHS_HOME
+        run: |
+          echo "HIGHS_HOME=$(pwd)/HiGHS" >> $GITHUB_ENV
+
+      - name: Verify HIGHS_HOME
+        run: |
+          echo "HIGHS_HOME is set to: $HIGHS_HOME"
 
       - uses: actions/checkout@v4
 
@@ -40,15 +49,16 @@ jobs:
           java-version: '23'
           distribution: 'temurin'
 
+      - name: Verify JAVA_HOME
+        run: |
+          echo "JAVA_HOME is set to: $JAVA_HOME"
+
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
 
       - name: Run Tests
         run: mvn test
