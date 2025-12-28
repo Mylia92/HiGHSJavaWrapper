@@ -18,10 +18,10 @@ jobs:
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 130
 
       - name: Install CMake
-        run: sudo apt-get update && sudo apt-get install -y cmake-3.3
+        run: sudo apt-get update && sudo apt-get install -y cmake
 
       - name: Install SWIG
-        run: sudo apt-get update && sudo apt-get install -y swig-4.3
+        run: sudo apt-get update && sudo apt-get install -y swig
 
       - name: Checkout HiGHS
         uses: actions/checkout@v4
