@@ -55,9 +55,9 @@ jobs:
 
       - name: Generate JNI classes
         run: |
-          echo "current path: $(pwd)"
-          chmod +x ./Wrapper/generate_jni_classes
-          ./Wrapper/generate_jni_classes
+          cd Wrapper
+          chmod +x ./generate_jni_classes
+          ./generate_jni_classes
 
       - name: Run Tests
         run: mvn test
