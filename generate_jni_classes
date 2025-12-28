@@ -1,7 +1,4 @@
 #!/bin/bash
-cp ${HIGHS_HOME}/build/lib/libhighs.so ./
 cd src/main/java/highs
 rm *.java
 swig -c++ -java -package highs -I${HIGHS_HOME}/highs -I${HIGHS_HOME}/build swig_java_highs.i
-gcc -O3 -fPIC -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux -I${HIGHS_HOME}/highs -I${HIGHS_HOME}/build -c swig_java_highs_wrap.cxx
-gcc -shared -o ../../../../libhighswrap.so swig_java_highs_wrap.o -L../../../../ -lhighs
