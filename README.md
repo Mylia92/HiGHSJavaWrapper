@@ -41,8 +41,8 @@ To build the JNI classes required by the wrapper, `generate_jni_classes` should 
 ## Use
 
 To run the tests or use the wrapper for another project, the JVM argument `-Djava.library.path` must be filled. The
-referred path must contain `libhighs.so` and `libhighswrap.so`. The main class or test classes (relying on calls to
-`HiGHS`) then must also contain (or something similar):
+referred path must contain `libhighs.so` and `libhighswrap.so`. The relevant classes (relying on calls to
+`HiGHS`) then must also contain (or something equivalent):
 
 ```
     static {
