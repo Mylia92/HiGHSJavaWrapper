@@ -28,6 +28,7 @@ jobs:
         with:
           repository: ERGO-Code/HiGHS
           ref: v1.12.0
+          path: HiGHS
 
       - name: Build HiGHS
         run: |
@@ -49,12 +50,14 @@ jobs:
 
       - name: Checkout project
         uses: actions/checkout@v4
+        with:
+          path: Wrapper
 
       - name: Generate JNI classes
         run: |
           echo "current path: $(pwd)"
-          chmod +x ./generate_jni_classes
-          ./generate_jni_classes
+          chmod +x ./Wrapper/generate_jni_classes
+          ./Wrapper/generate_jni_classes
 
       - name: Run Tests
         run: mvn test
