@@ -55,7 +55,7 @@ jobs:
 
       - name: Generate JNI classes
         run: |
-          ll
+          ls
           echo $(pwd)
           chmod +x ./generate_jni_classes
           ./generate_jni_classes
