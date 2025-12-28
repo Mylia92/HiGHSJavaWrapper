@@ -7,17 +7,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-25.10
 
     steps:
       - name: Install GCC
-        run: sudo apt-get update && sudo apt-get install -y gcc g++
+        run: sudo apt-get update && sudo apt-get install -y gcc=15.2.0
 
       - name: Install CMake
-        run: sudo apt-get update && sudo apt-get install -y cmake
+        run: sudo apt-get update && sudo apt-get install -y cmake=3.31.6
 
       - name: Install SWIG
-        run: sudo apt-get update && sudo apt-get install -y swig
+        run: sudo apt-get update && sudo apt-get install -y swig=4.3.0
 
       - name: Checkout HiGHS
         uses: actions/checkout@v4
@@ -30,7 +30,7 @@ jobs:
         run: |
           cd HiGHS
           cmake -S . -B build
-          cmake --build build
+          cmake --build build --parallel
           ctest
 
       - name: Set HIGHS_HOME
@@ -46,10 +46,6 @@ jobs:
         with:
           java-version: '23'
           distribution: 'temurin'
-
-      - name: Verify JAVA_HOME
-        run: |
-          echo "JAVA_HOME is set to: $JAVA_HOME"
 
       - uses: actions/checkout@v4
 
