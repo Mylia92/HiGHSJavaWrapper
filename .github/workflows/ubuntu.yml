@@ -50,8 +50,6 @@ jobs:
 
       - name: Checkout project
         uses: actions/checkout@v4
-        with:
-          path: Wrapper
 
       - name: Generate JNI classes
         run: |
