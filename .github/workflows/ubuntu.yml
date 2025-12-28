@@ -18,10 +18,14 @@ jobs:
           echo "CXX=g++" >> $GITHUB_ENV
 
       - name: Install CMake
-        run: sudo apt-get update && sudo apt-get install -y cmake
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake
 
       - name: Install SWIG
-        run: sudo apt-get update && sudo apt-get install -y swig
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swig
 
       - name: Checkout HiGHS
         uses: actions/checkout@v4
@@ -32,15 +36,12 @@ jobs:
 
       - name: Build HiGHS
         run: |
+          echo "HIGHS_HOME=$(pwd)/HiGHS" >> $GITHUB_ENV
           cd HiGHS
           cmake -S . -B build
           cmake --build build --parallel
           cd build
           ctest
-
-      - name: Set HIGHS_HOME
-        run: |
-          echo "HIGHS_HOME=$(pwd)/HiGHS" >> $GITHUB_ENV
 
       - name: Set up JDK
         uses: actions/setup-java@v3
@@ -60,4 +61,6 @@ jobs:
           ./generate_jni_classes
 
       - name: Run Tests
-        run: mvn test
+        run: |
+          cd Wrapper
+          mvn test
