@@ -8,7 +8,6 @@ import lombok.Getter;
 public class IntegerOption implements Option {
 
     private final String optionName;
-
     private final int value;
 
 }

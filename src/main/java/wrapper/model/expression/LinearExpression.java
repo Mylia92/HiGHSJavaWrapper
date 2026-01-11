@@ -1,6 +1,5 @@
 package wrapper.model.expression;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import wrapper.model.variable.Variable;
@@ -9,13 +8,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 @NoArgsConstructor
 public class LinearExpression {
 
     private final Set<Integer> variableIndices = new HashSet<>();
-
-    @Getter
     private final List<ExpressionCoefficient> coefficients = new ArrayList<>();
 
     public static LinearExpression of(final ExpressionCoefficient... coefficients) throws LinearExpressionException {
@@ -26,6 +24,10 @@ public class LinearExpression {
         return expression;
     }
 
+    public void consumeExpression(@NonNull final Consumer<ExpressionCoefficient> consumer) {
+        this.coefficients.forEach(consumer);
+    }
+
     public void addCoefficient(@NonNull final Variable variable, double coefficient) throws LinearExpressionException {
         if (!this.variableIndices.add(variable.index())) {
             throw new LinearExpressionException(String.format("Variable with index %d is already in linear expression", variable.index()));
@@ -33,7 +35,7 @@ public class LinearExpression {
         this.coefficients.add(new ExpressionCoefficient(variable, coefficient));
     }
 
-    public int getNmbNonZeros() {
+    public int getNmbCoefficients() {
         return this.coefficients.size();
     }
 
