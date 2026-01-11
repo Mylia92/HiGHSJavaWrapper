@@ -142,6 +142,19 @@ public class Model {
         return solve();
     }
 
+    public boolean parseSolution(final List<Variable> variables, final List<Double> values) {
+        final int nmbVariables = variables.size();
+        final DoubleArray initialValues = new DoubleArray(nmbVariables);
+        final IntegerArray indices = new IntegerArray(nmbVariables);
+        for (int i = 0; i < nmbVariables; ++i) {
+            final Variable variable = variables.get(i);
+            checkVariable(variable);
+            initialValues.setitem(i, values.get(i));
+            indices.setitem(i, variable.index());
+        }
+        return this.highs.setSolution(nmbVariables, indices.cast(), initialValues.cast()) == HighsStatus.kOk;
+    }
+
     private Optional<Solution> solve() {
         if (this.highs.run() == HighsStatus.kError) {
             return Optional.empty();
