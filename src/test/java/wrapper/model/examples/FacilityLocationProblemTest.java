@@ -42,7 +42,6 @@ class FacilityLocationProblemTest {
             demandPerCustomer[c] = random.nextInt(50, 70);
         }
         final double totalDemand = Arrays.stream(demandPerCustomer).sum();
-
         // Model creation.
         final Model model = new Model();
         // x[f] = 1 if facility f must be opened, 0 otherwise.
