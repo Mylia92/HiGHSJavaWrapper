@@ -9,12 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class LinearExpressionTest {
 
     @Test
-    void getNmbNonZeros() throws LinearExpressionException {
+    void getNmbCoefficients() throws LinearExpressionException {
         final LinearExpression linearExpression = new LinearExpression();
         linearExpression.addCoefficient(new Variable(4), 1.0);
         linearExpression.addCoefficient(new Variable(12), 0.5);
 
-        assertEquals(2, linearExpression.getNmbNonZeros());
+        assertEquals(2, linearExpression.getNmbCoefficients());
     }
 
     @Test

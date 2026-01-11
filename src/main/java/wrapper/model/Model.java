@@ -10,10 +10,12 @@ import wrapper.model.expression.LinearExpression;
 import wrapper.model.option.*;
 import wrapper.model.variable.Variable;
 import wrapper.model.variable.VariableException;
+import wrapper.solution.InitialSolution;
 import wrapper.solution.Solution;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.ObjDoubleConsumer;
 
 
 public class Model {
@@ -142,17 +144,33 @@ public class Model {
         return solve();
     }
 
-    public boolean parseSolution(final List<Variable> variables, final List<Double> values) {
-        final int nmbVariables = variables.size();
-        final DoubleArray initialValues = new DoubleArray(nmbVariables);
-        final IntegerArray indices = new IntegerArray(nmbVariables);
-        for (int i = 0; i < nmbVariables; ++i) {
-            final Variable variable = variables.get(i);
-            checkVariable(variable);
-            initialValues.setitem(i, values.get(i));
-            indices.setitem(i, variable.index());
+    public boolean parseSolution(@NonNull final InitialSolution initialSolution) {
+
+        class InitialSolutionConsumer implements ObjDoubleConsumer<Variable> {
+
+            private final DoubleArray values;
+            private final IntegerArray indices;
+            private int index = 0;
+
+            InitialSolutionConsumer(int initialSolutionSize) {
+                this.values = new DoubleArray(initialSolutionSize);
+                this.indices = new IntegerArray(initialSolutionSize);
+            }
+
+            @Override
+            public void accept(final Variable variable, double initialValue) {
+                checkVariable(variable);
+                values.setitem(index, initialValue);
+                indices.setitem(index, variable.index());
+                ++index;
+            }
+
         }
-        return this.highs.setSolution(nmbVariables, indices.cast(), initialValues.cast()) == HighsStatus.kOk;
+
+        final int nmbVariables = initialSolution.getNmbVariables();
+        final InitialSolutionConsumer consumer = new InitialSolutionConsumer(nmbVariables);
+        initialSolution.consumeSolution(consumer);
+        return this.highs.setSolution(nmbVariables, consumer.indices.cast(), consumer.values.cast()) == HighsStatus.kOk;
     }
 
     private Optional<Solution> solve() {
@@ -163,26 +181,33 @@ public class Model {
     }
 
     private Constraint addConstraint(double lhs, double rhs, final LinearExpression linearExpression, final ConstraintType constraintType) {
-        checkLinearExpression(linearExpression);
-        final int nmbNonZeros = linearExpression.getNmbNonZeros();
-        final DoubleArray values = new DoubleArray(nmbNonZeros);
-        final IntegerArray indices = new IntegerArray(nmbNonZeros);
-        final List<ExpressionCoefficient> coefficients = linearExpression.getCoefficients();
-        for (int i = 0; i < nmbNonZeros; ++i) {
-            final ExpressionCoefficient coefficient = coefficients.get(i);
-            values.setitem(i, coefficient.value());
-            indices.setitem(i, coefficient.variable().index());
-        }
-        this.highs.addRow(lhs, rhs, nmbNonZeros, indices.cast(), values.cast());
-        return new Constraint(this.highs.getNumRows() - 1, constraintType);
-    }
+        class LinearExpressionCoefficientConsumer implements Consumer<ExpressionCoefficient> {
 
-    private void checkLinearExpression(final LinearExpression linearExpression) {
-        final int nmbNonZeros = linearExpression.getNmbNonZeros();
-        final List<ExpressionCoefficient> coefficients = linearExpression.getCoefficients();
-        for (int i = 0; i < nmbNonZeros; ++i) {
-            checkVariable(coefficients.get(i).variable());
+            private final DoubleArray values;
+            private final IntegerArray indices;
+            private int index = 0;
+
+            LinearExpressionCoefficientConsumer(int nmbCoefficients) {
+                this.values = new DoubleArray(nmbCoefficients);
+                this.indices = new IntegerArray(nmbCoefficients);
+            }
+
+            @Override
+            public void accept(final ExpressionCoefficient expressionCoefficient) {
+                final Variable variable = expressionCoefficient.variable();
+                checkVariable(variable);
+                values.setitem(index, expressionCoefficient.value());
+                indices.setitem(index, variable.index());
+                ++index;
+            }
+
         }
+
+        final int nmbCoefficients = linearExpression.getNmbCoefficients();
+        final LinearExpressionCoefficientConsumer consumer = new LinearExpressionCoefficientConsumer(nmbCoefficients);
+        linearExpression.consumeExpression(consumer);
+        this.highs.addRow(lhs, rhs, nmbCoefficients, consumer.indices.cast(), consumer.values.cast());
+        return new Constraint(this.highs.getNumRows() - 1, constraintType);
     }
 
     private void checkVariable(final Variable variable) throws VariableException {

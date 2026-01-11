@@ -9,7 +9,6 @@ import lombok.Getter;
 public class DoubleOption implements Option {
 
     private final String optionName;
-
     private final double value;
 
 }
