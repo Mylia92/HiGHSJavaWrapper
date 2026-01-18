@@ -1,6 +1,5 @@
 package wrapper.model.option;
 
-
 public enum CommonBooleanOptions {
 
     SOLVER_OUTPUT {
