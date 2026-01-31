@@ -9,6 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        java: [ '23', '24', '25' ]
+
     steps:
       - name: Install GCC
         run: |
@@ -46,7 +50,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '23'
+          java-version: ${{ matrix.java }}
           distribution: 'temurin'
 
       - name: Checkout project
