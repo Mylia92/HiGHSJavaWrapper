@@ -12,10 +12,17 @@ class HighsTest {
     }
 
     @Test
-    void HighsIntMustBeEqualToFour() {
+    void highsIntMustBeEqualToFour() {
         final Highs highs = new Highs();
 
         assertEquals(4, highs.getSizeofHighsInt());
+    }
+
+    @Test
+    void highsVersionMustBeCorrect() {
+        final Highs highs = new Highs();
+
+        assertEquals("1.12.0", highs.version());
     }
 
 }
