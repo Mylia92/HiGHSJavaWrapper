@@ -15,7 +15,7 @@ Some examples on how to use the wrapper are provided in `src/test/java/wrapper/m
 ### HiGHS
 
 `HiGHS` must be built following [the instructions](https://github.com/ERGO-Code/HiGHS/) on its repository page. Once
-`HiGHS`is built, the environment variable `HIGHS_HOME` must be defined. For now, the wrapper expects version `v1.12.0`.
+`HiGHS` is built, the environment variable `HIGHS_HOME` must be defined. For now, the wrapper expects version `v1.12.0`.
 
 ### Java
 
@@ -23,20 +23,21 @@ A JDK 23 or later is required. `JAVA_HOME` must be defined.
 
 ### SWIG
 
-`SWIG` must be installed. On Ubuntu systems, one can use `sudo apt install swig`.
+`SWIG` [must be installed](https://www.swig.org/). On Ubuntu systems, one can use `sudo apt install swig`.
 
 ### Compiler
 
-`gcc` or `clang` must be installed. Note that `HiGHS` must have been installed with the same compiler.
+`gcc` or `clang` must be installed. Note that `HiGHS` must have been installed with the same compiler. The environment
+variables `CC` or `CXX` must be defined.
 
 ### Build the JNI classes
 
-To build the JNI classes required by the wrapper, `generate_jni_classes` should be used: It builds the JNI classes in
+To build the JNI classes required by the wrapper, `generate_jni_classes` should be used. It builds the JNI classes in
 `src/main/java/highs`,
 
 ### Build the shared libraries
 
-The build the shared libraries required by the wrapper, `generate_shared_libraries` should be used: It automatically
+`generate_shared_libraries` should be used to build the shared libraries required by the wrapper. It automatically
 creates the required shared libraries, `libhighs.so` and
 `libhighswrap.so`, in the base directory.
 

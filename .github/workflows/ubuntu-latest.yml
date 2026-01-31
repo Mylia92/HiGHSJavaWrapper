@@ -55,7 +55,7 @@ jobs:
         run: |
           echo "HIGHS_HOME=$(pwd)/HiGHS" >> $GITHUB_ENV
           cd HiGHS
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=RELEASE -DHIGHSINT64=on
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=RELEASE
           cmake --build build --parallel --config RELEASE
           cd build
           ctest
