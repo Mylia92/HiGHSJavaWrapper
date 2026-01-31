@@ -14,10 +14,10 @@ jobs:
         java: [ '23', '24', '25' ]
         compiler: [ 'gcc', 'clang' ]
 
-    name: Build with JDK ${{ matrix.java }}
+    name: Build with JDK ${{ matrix.java }} and ${{matrix.compiler}}
 
     steps:
-      - name: Set-up GCC
+      - name: Install GCC
         if: matrix.compiler == 'gcc'
         run: |
           sudo apt-get update
@@ -25,9 +25,11 @@ jobs:
           echo "CC=gcc" >> $GITHUB_ENV
           echo "CXX=g++" >> $GITHUB_ENV
 
-      - name: Set-up Clang
+      - name: Install Clang
         if: matrix.compiler == 'clang'
         run: |
+          sudo apt-get update
+          sudo apt-get install -y clang
           echo "CC=clang" >> $GITHUB_ENV
           echo "CXX=clang" >> $GITHUB_ENV
 
@@ -71,6 +73,8 @@ jobs:
       - name: Generate JNI classes
         run: |
           cd Wrapper
+          $CC --version
+          $CXX --version
           chmod +x ./generate_shared_libraries
           ./generate_shared_libraries
 
