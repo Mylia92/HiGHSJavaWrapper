@@ -14,12 +14,14 @@ Some examples on how to use the wrapper are provided in `src/test/java/wrapper/m
 
 ### HiGHS
 
-`HiGHS` must be built following [the instructions](https://github.com/ERGO-Code/HiGHS/) on its repository page. Once
-`HiGHS` is built, the environment variable `HIGHS_HOME` must be defined. For now, the wrapper expects version `v1.12.0`.
+`HiGHS` must be built following [the instructions](https://github.com/ERGO-Code/HiGHS/) on its repository page. For now,
+the wrapper expects version `v1.12.0`.
+
+Note that the wrapper is currently incompatible with the HiGHS compilation option `HIGHSINT64=on`.
 
 ### Java
 
-A JDK 23 or later is required. `JAVA_HOME` must be defined.
+A JDK 23 or later is required.
 
 ### SWIG
 
@@ -40,6 +42,11 @@ To build the JNI classes required by the wrapper, `generate_jni_classes` should 
 `generate_shared_libraries` should be used to build the shared libraries required by the wrapper. It automatically
 creates the required shared libraries, `libhighs.so` and
 `libhighswrap.so`, in the base directory.
+
+The following environment variables must be defined for the script to work:
+
+- `HIGHS_HOME`,
+- `JAVA_HOME`.
 
 ## Use
 
