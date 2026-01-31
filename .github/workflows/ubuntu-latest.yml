@@ -7,21 +7,32 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         java: [ '23', '24', '25' ]
+        compiler: [ 'gcc', 'clang' ]
+        os: [ ubuntu-latest ]
 
-    name: Build with JDK ${{ matrix.java }}
+    name: Build with JDK ${{ matrix.java }} and ${{matrix.compiler}}
 
     steps:
       - name: Install GCC
+        if: matrix.compiler == 'gcc'
         run: |
           sudo apt-get update
           sudo apt-get install -y gcc g++
           echo "CC=gcc" >> $GITHUB_ENV
           echo "CXX=g++" >> $GITHUB_ENV
+
+      - name: Install Clang
+        if: matrix.compiler == 'clang'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang
+          echo "CC=clang" >> $GITHUB_ENV
+          echo "CXX=clang++" >> $GITHUB_ENV
 
       - name: Install CMake
         run: |
@@ -44,8 +55,8 @@ jobs:
         run: |
           echo "HIGHS_HOME=$(pwd)/HiGHS" >> $GITHUB_ENV
           cd HiGHS
-          cmake -S . -B build
-          cmake --build build --parallel
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=RELEASE
+          cmake --build build --parallel --config RELEASE
           cd build
           ctest
 
@@ -63,6 +74,8 @@ jobs:
       - name: Generate JNI classes
         run: |
           cd Wrapper
+          $CC --version
+          $CXX --version
           chmod +x ./generate_shared_libraries
           ./generate_shared_libraries
 
