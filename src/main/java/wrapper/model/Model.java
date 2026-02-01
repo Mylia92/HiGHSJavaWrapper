@@ -163,9 +163,9 @@ public class Model {
             @Override
             public void accept(final Variable variable, double initialValue) {
                 checkVariable(variable);
-                values.setitem(index, initialValue);
-                indices.setitem(index, variable.index());
-                ++index;
+                this.values.setitem(this.index, initialValue);
+                this.indices.setitem(this.index, variable.index());
+                ++this.index;
             }
 
         }
@@ -199,9 +199,9 @@ public class Model {
             public void accept(final ExpressionCoefficient expressionCoefficient) {
                 final Variable variable = expressionCoefficient.variable();
                 checkVariable(variable);
-                values.setitem(index, expressionCoefficient.value());
-                indices.setitem(index, variable.index());
-                ++index;
+                this.values.setitem(this.index, expressionCoefficient.value());
+                this.indices.setitem(this.index, variable.index());
+                ++this.index;
             }
 
         }
