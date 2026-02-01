@@ -15,7 +15,7 @@ jobs:
         compiler: [ 'gcc', 'clang' ]
         os: [ ubuntu-latest ]
 
-    name: Build with JDK ${{ matrix.java }} and ${{matrix.compiler}}
+    name: Build with JDK ${{ matrix.java }} and ${{ matrix.compiler }}
 
     steps:
       - name: Install GCC
