@@ -71,7 +71,7 @@ jobs:
         with:
           path: Wrapper
 
-      - name: Generate JNI classes
+      - name: Generate shared libraries
         run: |
           cd Wrapper
           $CC --version
