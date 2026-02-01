@@ -15,7 +15,7 @@ jobs:
         compiler: [ 'gcc', 'clang' ]
         os: [ ubuntu-latest ]
 
-    name: Build with JDK ${{ matrix.java }} and ${{matrix.compiler}}
+    name: Build with JDK ${{ matrix.java }} and ${{ matrix.compiler }}
 
     steps:
       - name: Install GCC
@@ -71,7 +71,7 @@ jobs:
         with:
           path: Wrapper
 
-      - name: Generate JNI classes
+      - name: Generate shared libraries
         run: |
           cd Wrapper
           $CC --version
