@@ -180,7 +180,7 @@ class NonLinearWorkloadBalancingProblemTest {
             for (int m = 0; m < this.nmbMachines; ++m) {
                 linearizedObjectiveValue += Math.pow(workload[m], this.balancingExponent);
             }
-            final double gap = (linearizedObjectiveValue - objectiveValue) / (linearizedObjectiveValue + 1E-10);
+            final double gap = Math.abs(linearizedObjectiveValue - objectiveValue) / (linearizedObjectiveValue + 1E-10);
             return linearizedObjectiveValue <= RELATIVE_GAP_TARGET || objectiveValue <= RELATIVE_GAP_TARGET || gap <= RELATIVE_GAP_TARGET;
         }
 
